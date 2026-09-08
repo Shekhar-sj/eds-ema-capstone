@@ -1,47 +1,98 @@
+/* hero-banner: full-width photo with an overlapping white text panel */
+
+/* let the block run edge-to-edge (override section max-width) */
 .hero-banner-container .hero-banner-wrapper {
   max-width: unset;
   padding: 0;
 }
 
 .hero-banner {
+  padding: 0;
+}
+
+/* --- image row (full-width photo) --- */
+.hero-banner > div:first-child picture {
+  display: block;
+  line-height: 0;
+}
+
+.hero-banner > div:first-child img {
+  display: block;
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+}
+
+/* --- white text panel (overlaps the photo) --- */
+.hero-banner > div:last-child {
   position: relative;
-  padding: 40px 24px;
-  min-height: 300px;
+  z-index: 1;
+  box-sizing: content-box;
+  max-width: 1136px;
+  margin: -40px auto 0;
+  padding: 0 20px 20px;
+  background-color: var(--background-color);
 }
 
-.hero-banner h1,
-.hero-banner h2,
-.hero-banner h3,
-.hero-banner h4,
-.hero-banner h5,
-.hero-banner h6,
-.hero-banner p {
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
-  color: var(--background-color);
-}
-
-.hero-banner.no-image * {
+.hero-banner h2 {
+  margin: 18px 0 0;
+  font-family: var(--heading-font-family);
+  font-size: var(--heading-font-size-xl);
+  font-weight: 400;
+  line-height: 1.5;
   color: var(--text-color);
 }
 
-.hero-banner picture {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  object-fit: cover;
-  box-sizing: border-box;
+.hero-banner p {
+  margin: 0;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--text-color);
 }
 
-.hero-banner img {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
+/* CTA wrapper (the paragraph that contains the link) */
+.hero-banner p:last-child {
+  margin: 18px 0 0;
+}
+
+/* CTA button — yellow WKND signature */
+.hero-banner p:last-child a:any-link {
+  display: inline-block;
+  padding: 14px 35px;
+  border: 2px solid var(--accent-color);
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.hero-banner p:last-child a:hover,
+.hero-banner p:last-child a:focus-visible {
+  border-color: var(--text-color);
+  background-color: var(--text-color);
+  color: var(--accent-color);
+  text-decoration: none;
+}
+
+/* --- no-image fallback (variant reuse safety) --- */
+.hero-banner.no-image > div:last-child {
+  margin-top: 0;
 }
 
 @media (width >= 900px) {
-  .hero-banner {
-    padding: 40px 32px;
+  .hero-banner > div:first-child img {
+    height: 640px;
+  }
+
+  .hero-banner > div:last-child {
+    margin-top: -180px;
+    padding: 0 28px 18px;
   }
 }

@@ -1,56 +1,68 @@
+/* Tab list — horizontal row of tabs, no gap (tabs butt together) */
 .tabs-detail .tabs-detail-list {
   display: flex;
-  gap: 0.5ch;
+  flex-wrap: wrap;
+  gap: 0;
   max-width: 100%;
-  font-size: var(--body-font-size-xs);
+  margin: 18px 0;
   overflow-x: auto;
 }
 
-@media (width >= 600px) {
-  .tabs-detail .tabs-detail-list {
-    font-size: var(--body-font-size-s);
-  }
-}
-
-@media (width >= 900px) {
-  .tabs-detail .tabs-detail-list {
-    font-size: var(--body-font-size-m);
-  }
-}
-
+/* Individual tab buttons — inactive state */
 .tabs-detail .tabs-detail-list button {
   flex: 0 0 max-content;
   margin: 0;
-  border: 1px solid #dadada;
+  border: 0;
+  border-bottom: 1px solid transparent;
   border-radius: 0;
-  padding: 0.5em;
-  background-color: var(--light-color);
-  color: initial;
-  font-weight: bold;
-  line-height: unset;
-  text-align: initial;
+  padding: 8px 16px;
+  background-color: transparent;
+  color: var(--text-color);
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs); /* 14px */
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: normal;
+  text-align: left;
+  text-transform: uppercase;
   text-overflow: unset;
   overflow: unset;
   white-space: unset;
-  transition: background-color 0.2s;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
 }
 
 .tabs-detail .tabs-detail-list button p {
   margin: 0;
 }
 
-
+/* Active tab — solid dark fill, white text */
 .tabs-detail .tabs-detail-list button[aria-selected='true'] {
-  border-bottom: 1px solid var(--background-color);
-  background-color: var(--background-color);
+  border-bottom-color: transparent;
+  background-color: var(--dark-color); /* #202020 */
+  color: var(--background-color); /* #fff */
   cursor: initial;
 }
 
+/* Content panel — no border, no padding, justified body text */
 .tabs-detail .tabs-detail-panel {
-  margin-top: -1px;
-  padding: 24px;
-  border: 1px solid #dadada;
+  margin-top: 0;
+  padding: 0;
+  border: 0;
   overflow: auto;
+  font-size: var(--body-font-size-m); /* 18px */
+  line-height: 27px;
+  color: var(--text-color);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.tabs-detail .tabs-detail-panel p {
+  margin: 0 0 13.5px;
+  text-align: justify;
+}
+
+.tabs-detail .tabs-detail-panel p:last-child {
+  margin-bottom: 0;
 }
 
 .tabs-detail .tabs-detail-panel[aria-hidden='true'] {

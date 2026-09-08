@@ -1,61 +1,86 @@
-.accordion-faq details {
-  border: 1px solid #dadada;
+/*
+ * Accordion Block (accordion-faq variant)
+ * Design migrated from https://wknd.site/us/en/faqs.html
+ * Vertical list of expandable Q&A rows: uppercase question + / - toggle icon,
+ * thin divider rules between items, collapsible answer panel.
+ */
+
+/* Divider rules: top rule on the list + bottom rule under every item
+   (source: .cmp-accordion__button border-bottom 2px solid rgb(235, 235, 235)). */
+.accordion-faq {
+  border-top: 2px solid var(--light-color);
 }
 
-/* stylelint-disable-next-line no-descending-specificity */
-.accordion-faq details + details {
-  margin-top: 24px;
+.accordion-faq .accordion-faq-item {
+  border-bottom: 2px solid var(--light-color);
 }
 
-.accordion-faq details p {
-  margin-bottom: 0.8em;
-}
-
-.accordion-faq details summary {
+/* Question row (rendered as <summary>) — source .cmp-accordion__button:
+   display block, full width, text-align left, padding 1em, no background. */
+.accordion-faq .accordion-faq-item-label {
   position: relative;
-  padding: 0 16px;
-  padding-right: 46px;
+  display: block;
+  padding: 13px 40px 13px 13px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-s); /* 16px */
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  color: var(--text-color);
   cursor: pointer;
   list-style: none;
-  overflow: auto;
-  transition: background-color 0.2s;
 }
 
-.accordion-faq details[open] summary {
-  background-color: var(--light-color);
-}
-
-.accordion-faq details summary:focus,
-.accordion-faq details summary:hover {
-  background-color: var(--light-color);
-}
-
-.accordion-faq details summary::-webkit-details-marker {
+/* Remove native disclosure triangle */
+.accordion-faq .accordion-faq-item-label::-webkit-details-marker {
   display: none;
 }
 
-.accordion-faq details summary::after {
+.accordion-faq .accordion-faq-item-label:focus {
+  outline: none;
+}
+
+/* Toggle icon: "+" built from two 2px bars, right-aligned, vertically centered.
+   Source glyph is wknd-icon-font (plus e911 / minus e910), ~20px, black. */
+.accordion-faq .accordion-faq-item-label::before,
+.accordion-faq .accordion-faq-item-label::after {
   content: '';
   position: absolute;
   top: 50%;
-  right: 18px;
-  transform: translateY(-50%) rotate(135deg);
-  width: 6px;
-  height: 6px;
-  border: 2px solid;
-  border-width: 2px 2px 0 0;
-  transition: transform 0.2s;
+  right: 13px;
+  background-color: var(--text-color);
 }
 
-.accordion-faq details[open] summary::after {
-  transform: translateY(-50%) rotate(-45deg);
+/* horizontal bar (always visible) */
+.accordion-faq .accordion-faq-item-label::after {
+  width: 18px;
+  height: 2px;
+  transform: translateY(-50%);
 }
 
-.accordion-faq details .accordion-faq-item-body {
-  padding: 0 16px;
+/* vertical bar (hidden when open -> becomes a minus sign) */
+.accordion-faq .accordion-faq-item-label::before {
+  width: 2px;
+  height: 18px;
+  right: 21px;
+  transform: translateY(-50%);
+  transition: opacity 0.2s;
 }
 
-.accordion-faq details[open] .accordion-faq-item-body {
-  border-top: 1px solid #dadada;
-  background-color: var(--background-color);
+.accordion-faq .accordion-faq-item[open] .accordion-faq-item-label::before {
+  opacity: 0;
+}
+
+/* Answer panel — source .cmp-accordion__panel: padding-top/left 7px, body text
+   14px, line-height 1.75, color #202020. */
+.accordion-faq .accordion-faq-item-body {
+  padding: 4px 13px 18px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-xs); /* 14px */
+  line-height: 1.75;
+  color: var(--text-color);
+}
+
+.accordion-faq .accordion-faq-item-body p {
+  margin: 0;
 }

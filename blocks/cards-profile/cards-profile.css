@@ -1,10 +1,16 @@
+/* cards-profile — contributor / guide tiles
+   Values extracted from wknd.site /us/en/about-us.html (getComputedStyle @1440):
+   avatar 164px circle, name Asar 24px/36, role Source Sans Pro 14px/21 uppercase,
+   social 48px squares #202020 icon #ebebeb, no gap, centered. */
+
 .cards-profile > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px 28px;
+  justify-items: center;
 }
 
 .cards-profile > ul > li {
@@ -12,51 +18,97 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: var(--background-color);
+  width: 100%;
+  max-width: 235px;
+  background-color: transparent;
 }
 
+/* Circular avatar */
 .cards-profile .cards-profile-card-image {
   line-height: 0;
-  width: 165px;
-  max-width: 100%;
+  margin: 7px 0;
 }
 
 .cards-profile .cards-profile-card-image img {
-  width: 165px;
-  height: 165px;
+  width: 164px;
+  height: 164px;
   border-radius: 50%;
   object-fit: cover;
 }
 
 .cards-profile .cards-profile-card-body {
-  margin: 16px 0 0;
+  margin: 0;
+  width: 100%;
 }
 
+/* Name — serif */
 .cards-profile .cards-profile-card-body h3 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+  color: var(--text-color);
+  text-transform: none;
 }
 
+/* Role line — uppercase, bold, small */
 .cards-profile .cards-profile-card-body h5 {
-  margin: 0 0 12px;
+  margin: 0 0 3.5px;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  color: var(--text-color);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: normal;
 }
 
-/* Social icon links row: render the paragraph/list of links horizontally */
-.cards-profile .cards-profile-card-body p {
+/* Social icon row — square dark buttons, flush together, centered */
+.cards-profile .cards-profile-card-body p.cards-profile-social {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  gap: 0;
   margin: 0;
+  padding-top: 18px;
 }
 
-.cards-profile .cards-profile-card-body a {
+.cards-profile .cards-profile-card-body p.cards-profile-social a:any-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: #2a2a2a;
-  color: #fff;
-  border-radius: 2px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  background-color: var(--dark-color);
+  color: var(--light-color);
+  transition: background-color 0.2s ease;
+}
+
+.cards-profile .cards-profile-card-body p.cards-profile-social a:hover {
+  background-color: var(--accent-color);
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.cards-profile .cards-profile-card-body p.cards-profile-social a svg {
+  width: 20px;
+  height: 20px;
+  fill: currentcolor;
+}
+
+/* Tablet: 3 across */
+@media (width >= 700px) {
+  .cards-profile > ul {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop: 4 across (Our Contributors) */
+@media (width >= 900px) {
+  .cards-profile > ul {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }

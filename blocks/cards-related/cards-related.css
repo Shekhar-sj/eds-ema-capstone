@@ -1,5 +1,6 @@
-/* Related-stories list: text-only title + date items, stacked vertically.
-   No images; each item is a linked title above a muted date, separated by rules. */
+/* Related-stories ("Share this Story") list: text-only title + date items,
+   stacked vertically. Each item has a thick light-gray rule on its left edge.
+   No images. Values extracted from wknd.site .list.cmp-list--upnext. */
 
 .cards-related > ul {
   list-style: none;
@@ -9,36 +10,55 @@
   flex-direction: column;
 }
 
+/* 18px vertical gap between items (source li margin-bottom: 18px). */
 .cards-related > ul > li {
-  border-top: 1px solid #dadada;
-  padding: 16px 0;
+  margin: 0 0 18px;
+  padding: 0;
 }
 
 .cards-related > ul > li:last-child {
-  border-bottom: 1px solid #dadada;
+  margin-bottom: 0;
 }
 
+/* The item body carries the 5px light-gray left rule + inset padding
+   (source: anchor border-left 5px solid #ebebeb, padding 8px 16px). */
 .cards-related .cards-related-card-body {
+  margin: 0;
+  padding: 8px 16px;
+  border-left: 5px solid var(--light-color); /* #ebebeb */
+}
+
+/* Title paragraph + link. */
+.cards-related .cards-related-card-body p {
   margin: 0;
 }
 
-.cards-related .cards-related-card-body a {
-  font-weight: 700;
-  text-decoration: none;
+.cards-related .cards-related-card-body p > a:any-link {
   display: block;
-}
-
-.cards-related .cards-related-card-body a:hover {
-  text-decoration: underline;
-}
-
-/* Publication date rendered as a secondary line (second paragraph in the cell). */
-.cards-related .cards-related-card-body p + p {
-  margin-top: 4px;
-  font-size: var(--body-font-size-s, 0.875rem);
-  color: #6a6a6a;
+  margin: 0;
+  padding: 5px;
+  font-family: var(--body-font-family);
+  font-size: var(--body-font-size-m); /* 18px */
+  font-weight: 400;
+  line-height: 27px;
+  color: var(--text-color); /* #202020 — title renders dark, not link-blue */
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  text-decoration: none;
+}
+
+.cards-related .cards-related-card-body p > a:hover {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+/* Publication date: second paragraph, muted + uppercase. */
+.cards-related .cards-related-card-body p + p {
+  padding: 5px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #696969;
+  text-transform: uppercase;
 }
 
 /* Image column kept for defensive decoration if an author adds a thumbnail. */

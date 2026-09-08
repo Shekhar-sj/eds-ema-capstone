@@ -1,33 +1,54 @@
+/* columns-author — compact author byline (avatar + name + role)
+ * Values extracted from wknd.site article byline (.cmp-byline):
+ *   avatar 60x60 circular, 25px gap, name Asar 24px/36px,
+ *   role Source Sans Pro 12px/30px uppercase #696969.
+ */
+
 .columns-author > div {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
 }
 
-.columns-author img {
-  width: 100%;
-}
-
-.columns-author > div > div {
-  order: 1;
-}
-
+/* avatar column — fixed compact circle, never grows */
 .columns-author > div > .columns-author-img-col {
-  order: 0;
+  flex: 0 0 60px;
+  width: 60px;
 }
 
+.columns-author > div > .columns-author-img-col picture,
 .columns-author > div > .columns-author-img-col img {
   display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-@media (width >= 900px) {
-  .columns-author > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
-  }
+/* text column */
+.columns-author > div > div:not(.columns-author-img-col) {
+  flex: 1;
+}
 
-  .columns-author > div > div {
-    flex: 1;
-    order: unset;
-  }
+.columns-author > div > div:not(.columns-author-img-col) h2 {
+  margin: 0 0 4px;
+  padding: 0;
+  font-family: var(--heading-font-family);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 36px;
+  color: var(--text-color);
+}
+
+.columns-author > div > div:not(.columns-author-img-col) p {
+  margin: 0;
+  padding: 0;
+  font-family: var(--body-font-family);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: rgb(105 105 105);
 }
