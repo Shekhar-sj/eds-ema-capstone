@@ -12,6 +12,10 @@ const placeholdersCache = {};
  * @param {string} [prefix=''] Path prefix for the placeholders sheet
  *   (e.g. '/us/en'). Defaults to the site root.
  * @returns {Promise<Object>} Map of camelCased keys to their text values.
+ *
+ * @example
+ *   const placeholders = await fetchPlaceholders();
+ *   el.setAttribute('aria-label', placeholders.previousSlide || 'Previous Slide');
  */
 export async function fetchPlaceholders(prefix = '') {
   const key = prefix || 'default';
