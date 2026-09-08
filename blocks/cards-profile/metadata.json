@@ -1,0 +1,40 @@
+{
+  "variantName": "cards-profile",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-09-08T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/us/en/about-us.html",
+    "originPage": "About Us (grid-landing template)",
+    "blockPosition": "middle"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "spacious",
+    "purpose": "team",
+    "imagePattern": "avatar"
+  },
+  "contentPattern": {
+    "structure": "circular avatar + name (H3) + role (H5) + social icon links",
+    "buttonCount": 3,
+    "imageCount": 1,
+    "cardsPerRow": 4
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "team / contributor / staff profile grids",
+      "author or guide bios with circular avatar + name + role",
+      "profile tiles that include a row of social media links"
+    ],
+    "notSuitableFor": [
+      "article/adventure thumbnail teaser grids (use cards-article)",
+      "grids needing a category filter tab bar (use cards-filter)",
+      "text-only link lists (use cards-related)"
+    ]
+  },
+  "usage": {
+    "pagesUsing": ["/us/en/about-us"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-08T00:00:00.000Z"
+  }
+}
