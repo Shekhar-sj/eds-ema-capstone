@@ -1,0 +1,53 @@
+/* Related-stories list: text-only title + date items, stacked vertically.
+   No images; each item is a linked title above a muted date, separated by rules. */
+
+.cards-related > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cards-related > ul > li {
+  border-top: 1px solid #dadada;
+  padding: 16px 0;
+}
+
+.cards-related > ul > li:last-child {
+  border-bottom: 1px solid #dadada;
+}
+
+.cards-related .cards-related-card-body {
+  margin: 0;
+}
+
+.cards-related .cards-related-card-body a {
+  font-weight: 700;
+  text-decoration: none;
+  display: block;
+}
+
+.cards-related .cards-related-card-body a:hover {
+  text-decoration: underline;
+}
+
+/* Publication date rendered as a secondary line (second paragraph in the cell). */
+.cards-related .cards-related-card-body p + p {
+  margin-top: 4px;
+  font-size: var(--body-font-size-s, 0.875rem);
+  color: #6a6a6a;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Image column kept for defensive decoration if an author adds a thumbnail. */
+.cards-related .cards-related-card-image {
+  line-height: 0;
+}
+
+.cards-related .cards-related-card-image img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}

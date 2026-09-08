@@ -25,6 +25,14 @@ npm i
 npm run lint
 ```
 
+## Utilities
+
+- `scripts/placeholders.js` — exports `fetchPlaceholders(prefix)`, which fetches
+  `/placeholders.json` and returns a camelCased key→value map (cached per prefix).
+  Blocks import it from `../../scripts/placeholders.js` for localized UI labels
+  (e.g. carousel control aria-labels). Note: `scripts/aem.js` is vendored and does
+  not export `fetchPlaceholders` — always import it from `scripts/placeholders.js`.
+
 ## Local development
 
 1. Create a new repository based on the `aem-boilerplate` template

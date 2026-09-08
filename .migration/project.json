@@ -1,0 +1,14 @@
+{
+  "type": "da",
+  "sites": {
+    "eds-ema-capstone": {
+      "previewOrg": "shekhar-sj",
+      "previewSite": "eds-ema-capstone",
+      "contentHostUrl": "https://content.da.live/shekhar-sj/eds-ema-capstone/",
+      "libraryUrl": "https://main--sta-boilerplate--aemdemos.aem.page/tools/sidekick/library.json"
+    }
+  },
+  "features": [
+    "site-planning"
+  ]
+}

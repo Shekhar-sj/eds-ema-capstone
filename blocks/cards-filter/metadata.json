@@ -1,0 +1,42 @@
+{
+  "variantName": "cards-filter",
+  "baseBlock": "cards",
+  "version": "1.0.0",
+  "created": "2026-09-08T00:00:00.000Z",
+  "sourceContext": {
+    "originUrl": "https://wknd.site/us/en/adventures.html",
+    "originPage": "WKND adventure-listing (Adventures)",
+    "blockPosition": "bottom"
+  },
+  "visualCharacteristics": {
+    "colorScheme": "light",
+    "density": "compact",
+    "purpose": "article",
+    "imagePattern": "large"
+  },
+  "contentPattern": {
+    "structure": "filter tab bar + (category + image + title + description) grid",
+    "buttonCount": 0,
+    "imageCount": 1,
+    "cardsPerRow": 4,
+    "hasFilterTabs": true
+  },
+  "reuseGuidance": {
+    "suitableFor": [
+      "adventure/trip teaser card grids that need category filtering",
+      "product or article grids with a category filter tab bar (All + per-category tabs)",
+      "4-up thumbnail + title + one-line description grids where cards are tagged by category"
+    ],
+    "notSuitableFor": [
+      "static card grids with no filtering (use cards-article)",
+      "single featured items (use columns)",
+      "long-form switchable content panels of a single item (use tabs-detail)"
+    ]
+  },
+  "notes": "Shares the WKND card visual structure of cards-article (image + title-link + one-line description, 4-up grid) but adds an interactive category-filter tab bar. Not derived by copying cards-article - authored with a leading per-card category cell that drives the generated tab bar (All + one tab per distinct category). Created because cards-article renders no filter controls, and the source uses a real AEM tabs (panelcontainer) wrapping identical card grids per category.",
+  "usage": {
+    "pagesUsing": ["/us/en/adventures"],
+    "reuseCount": 1,
+    "lastUsed": "2026-09-08T00:00:00.000Z"
+  }
+}

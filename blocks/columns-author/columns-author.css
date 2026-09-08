@@ -1,0 +1,33 @@
+.columns-author > div {
+  display: flex;
+  flex-direction: column;
+}
+
+.columns-author img {
+  width: 100%;
+}
+
+.columns-author > div > div {
+  order: 1;
+}
+
+.columns-author > div > .columns-author-img-col {
+  order: 0;
+}
+
+.columns-author > div > .columns-author-img-col img {
+  display: block;
+}
+
+@media (width >= 900px) {
+  .columns-author > div {
+    align-items: center;
+    flex-direction: unset;
+    gap: 24px;
+  }
+
+  .columns-author > div > div {
+    flex: 1;
+    order: unset;
+  }
+}

@@ -1,0 +1,62 @@
+.cards-profile > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  gap: 24px;
+}
+
+.cards-profile > ul > li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--background-color);
+}
+
+.cards-profile .cards-profile-card-image {
+  line-height: 0;
+  width: 165px;
+  max-width: 100%;
+}
+
+.cards-profile .cards-profile-card-image img {
+  width: 165px;
+  height: 165px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cards-profile .cards-profile-card-body {
+  margin: 16px 0 0;
+}
+
+.cards-profile .cards-profile-card-body h3 {
+  margin: 0 0 8px;
+}
+
+.cards-profile .cards-profile-card-body h5 {
+  margin: 0 0 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Social icon links row: render the paragraph/list of links horizontally */
+.cards-profile .cards-profile-card-body p {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.cards-profile .cards-profile-card-body a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #2a2a2a;
+  color: #fff;
+  border-radius: 2px;
+}

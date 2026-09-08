@@ -114,9 +114,10 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
  */
 export default async function decorate(block) {
   // load nav as fragment
+  // metadata-independent dual-path: /content/nav (localhost/aem up) then /nav (DA/EDS prod)
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const fragment = await loadFragment(navPath);
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/content/nav';
+  const fragment = (await loadFragment(navPath)) || (await loadFragment('/nav'));
 
   // decorate nav DOM
   block.textContent = '';

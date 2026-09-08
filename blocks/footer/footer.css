@@ -1,5 +1,6 @@
 footer {
-  background-color: var(--light-color);
+  background-color: var(--dark-color);
+  color: var(--light-color);
   font-size: var(--body-font-size-xs);
 }
 
@@ -7,10 +8,44 @@ footer .footer > div {
   margin: auto;
   max-width: 1200px;
   padding: 40px 24px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 40px;
 }
 
 footer .footer p {
   margin: 0;
+  color: var(--light-color);
+}
+
+/* WKND footer logo */
+footer .footer img {
+  width: 120px;
+  height: auto;
+}
+
+/* nav + social link lists render inline */
+footer .footer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+
+footer .footer a:any-link {
+  color: var(--light-color);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}
+
+footer .footer a:hover {
+  color: #fff;
+  text-decoration: underline;
 }
 
 @media (width >= 900px) {

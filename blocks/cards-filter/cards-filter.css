@@ -1,0 +1,58 @@
+.cards-filter .cards-filter-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.cards-filter .cards-filter-tab {
+  appearance: none;
+  border: 1px solid #dadada;
+  background: var(--background-color);
+  color: var(--text-color);
+  font: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: var(--body-font-size-s, 14px);
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.cards-filter .cards-filter-tab[aria-selected="true"] {
+  background: var(--text-color, #000);
+  color: var(--background-color, #fff);
+  border-color: var(--text-color, #000);
+}
+
+.cards-filter > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  gap: 24px;
+}
+
+.cards-filter > ul > li {
+  border: 1px solid #dadada;
+  background-color: var(--background-color);
+}
+
+.cards-filter > ul > li[hidden] {
+  display: none;
+}
+
+.cards-filter .cards-filter-card-body {
+  margin: 16px;
+}
+
+.cards-filter .cards-filter-card-image {
+  line-height: 0;
+}
+
+.cards-filter > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}

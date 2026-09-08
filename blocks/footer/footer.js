@@ -7,9 +7,10 @@ import { loadFragment } from '../fragment/fragment.js';
  */
 export default async function decorate(block) {
   // load footer as fragment
+  // metadata-independent dual-path: /content/footer (localhost/aem up) then /footer (DA/EDS prod)
   const footerMeta = getMetadata('footer');
-  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const fragment = await loadFragment(footerPath);
+  const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/content/footer';
+  const fragment = (await loadFragment(footerPath)) || (await loadFragment('/footer'));
 
   // decorate footer DOM
   block.textContent = '';
