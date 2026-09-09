@@ -39,9 +39,14 @@ indices:
       category:
         select: head > meta[name="category"]
         value: attribute(el, 'content')
-      # NOTE: do NOT define a `lastModified` property. The indexer adds
-      # `lastModified` automatically as a built-in column (a Unix timestamp from
-      # the page's publish time) — configuring it (and there is no HTTP-header
-      # function available) causes a 400 in the Index Admin editor. The
-      # cards-article / cards-filter blocks sort by that built-in value, so
+      # lastModified: read from the HTTP Last-Modified response header at index
+      # time. CRITICAL: `select` must be the literal string `none` (NOT empty,
+      # and NOT a `meta[name="last-modified"]` selector — that element does not
+      # exist on the pages, so the value never evaluates and the row freezes at
+      # a stale value). In the tools.aem.live Index Admin UI, put `none` in the
+      # SELECT column, leave SELECT FIRST empty, and keep the VALUE below.
+      # The cards-article / cards-filter blocks sort by this (newest first), so
       # republishing a page moves it up the listing with no manual upkeep.
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
