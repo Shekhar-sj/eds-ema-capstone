@@ -29,6 +29,13 @@
   text-decoration: none;
 }
 
+/* Keyboard focus ring — the icon buttons are links with no visible text, so a
+   visible focus indicator is required for keyboard navigation / accessibility. */
+.social-links .social-links-list a.social-links-item:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 2px;
+}
+
 /* Explicit dark fill (not currentcolor) so the glyph never inherits a light
    footer text color and vanish against the light button background. */
 .social-links .social-links-list a.social-links-item svg {
