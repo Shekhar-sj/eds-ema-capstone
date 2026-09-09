@@ -48,6 +48,36 @@ footer .footer a:hover {
   text-decoration: underline;
 }
 
+/* Social icon buttons (Follow Us) — match source: 48x48 light-grey squares
+   with a dark glyph, no gap between them, decorated by footer.js. */
+footer .footer ul.footer-social {
+  gap: 0;
+}
+
+footer .footer ul.footer-social a.footer-social-link:any-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--light-color);
+  color: var(--text-color);
+  text-transform: none;
+  text-decoration: none;
+}
+
+footer .footer ul.footer-social a.footer-social-link:hover {
+  background-color: #fff;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+footer .footer ul.footer-social a.footer-social-link svg {
+  width: 20px;
+  height: 20px;
+  fill: currentcolor;
+}
+
 @media (width >= 900px) {
   footer .footer > div {
     padding: 40px 32px 24px;
