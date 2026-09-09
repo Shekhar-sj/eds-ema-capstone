@@ -1,0 +1,321 @@
+{
+  "found": {
+    "container": {
+      "display": "block",
+      "padding": "0px 14px",
+      "margin": "0px",
+      "max-width": "none",
+      "background-color": "rgba(0, 0, 0, 0)"
+    },
+    "tablist": {
+      "tag": "OL",
+      "cls": "cmp-tabs__tablist",
+      "style": {
+        "display": "flex",
+        "flex-direction": "row",
+        "flex-wrap": "wrap",
+        "gap": "normal",
+        "margin": "18px 0px",
+        "padding": "0px",
+        "border": "0px none rgb(32, 32, 32)",
+        "border-bottom": "0px none rgb(32, 32, 32)",
+        "list-style": "outside none none",
+        "justify-content": "normal",
+        "align-items": "normal",
+        "column-gap": "normal",
+        "row-gap": "normal"
+      },
+      "rect": {
+        "w": 1136,
+        "h": 38
+      }
+    },
+    "tabs": [
+      {
+        "text": "All",
+        "selAttr": "true",
+        "cls": "cmp-tabs__tab cmp-tabs__tab--active",
+        "style": {
+          "display": "list-item",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px",
+          "padding": "8px 16px",
+          "background-color": "rgb(32, 32, 32)",
+          "border": "0px none rgb(255, 255, 255)",
+          "border-top": "0px none rgb(255, 255, 255)",
+          "border-bottom": "0px none rgb(255, 255, 255)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "14px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "uppercase",
+          "color": "rgb(255, 255, 255)",
+          "line-height": "21px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 52,
+          "h": 38
+        }
+      },
+      {
+        "text": "Climbing",
+        "selAttr": "false",
+        "cls": "cmp-tabs__tab",
+        "style": {
+          "display": "list-item",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px",
+          "padding": "8px 16px",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border": "",
+          "border-top": "0px none rgb(32, 32, 32)",
+          "border-bottom": "1px solid rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "14px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "uppercase",
+          "color": "rgb(32, 32, 32)",
+          "line-height": "21px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 87,
+          "h": 38
+        }
+      },
+      {
+        "text": "Cycling",
+        "selAttr": "false",
+        "cls": "cmp-tabs__tab",
+        "style": {
+          "display": "list-item",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px",
+          "padding": "8px 16px",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border": "",
+          "border-top": "0px none rgb(32, 32, 32)",
+          "border-bottom": "1px solid rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "14px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "uppercase",
+          "color": "rgb(32, 32, 32)",
+          "line-height": "21px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 81,
+          "h": 38
+        }
+      },
+      {
+        "text": "Skiing",
+        "selAttr": "false",
+        "cls": "cmp-tabs__tab",
+        "style": {
+          "display": "list-item",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px",
+          "padding": "8px 16px",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border": "",
+          "border-top": "0px none rgb(32, 32, 32)",
+          "border-bottom": "1px solid rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "14px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "uppercase",
+          "color": "rgb(32, 32, 32)",
+          "line-height": "21px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 71,
+          "h": 38
+        }
+      },
+      {
+        "text": "Surfing",
+        "selAttr": "false",
+        "cls": "cmp-tabs__tab",
+        "style": {
+          "display": "list-item",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px",
+          "padding": "8px 16px",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border": "",
+          "border-top": "0px none rgb(32, 32, 32)",
+          "border-bottom": "1px solid rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "14px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "uppercase",
+          "color": "rgb(32, 32, 32)",
+          "line-height": "21px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 83,
+          "h": 38
+        }
+      },
+      {
+        "text": "Travel",
+        "selAttr": "false",
+        "cls": "cmp-tabs__tab",
+        "style": {
+          "display": "list-item",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px",
+          "padding": "8px 16px",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border": "",
+          "border-top": "0px none rgb(32, 32, 32)",
+          "border-bottom": "1px solid rgba(0, 0, 0, 0)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "14px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "uppercase",
+          "color": "rgb(32, 32, 32)",
+          "line-height": "21px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 75,
+          "h": 38
+        }
+      },
+      {
+        "text": "Bali Surf Camp\n        \n\n        Surfing",
+        "selAttr": null,
+        "cls": "cmp-image-list__item",
+        "style": {
+          "display": "list-item",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px 0px 32px",
+          "padding": "0px 14px 0px 0px",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(32, 32, 32)",
+          "border-top": "0px none rgb(32, 32, 32)",
+          "border-bottom": "0px none rgb(32, 32, 32)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "18px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "none",
+          "color": "rgb(32, 32, 32)",
+          "line-height": "27px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 274,
+          "h": 271
+        }
+      },
+      {
+        "text": "",
+        "selAttr": null,
+        "cls": "cmp-image-list__item-image-link",
+        "style": {
+          "display": "inline",
+          "flex-direction": "row",
+          "flex-wrap": "nowrap",
+          "gap": "normal",
+          "margin": "0px",
+          "padding": "0px",
+          "background-color": "rgba(0, 0, 0, 0)",
+          "border": "0px none rgb(0, 69, 255)",
+          "border-top": "0px none rgb(0, 69, 255)",
+          "border-bottom": "0px none rgb(0, 69, 255)",
+          "border-radius": "0px",
+          "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "font-size": "18px",
+          "font-weight": "400",
+          "letter-spacing": "normal",
+          "text-transform": "none",
+          "color": "rgb(0, 69, 255)",
+          "line-height": "27px",
+          "align-items": "normal",
+          "justify-content": "normal"
+        },
+        "rect": {
+          "w": 260,
+          "h": 207
+        }
+      }
+    ],
+    "activeTab": {
+      "cls": "cmp-tabs__tab cmp-tabs__tab--active",
+      "style": {
+        "display": "list-item",
+        "flex-direction": "row",
+        "flex-wrap": "nowrap",
+        "gap": "normal",
+        "margin": "0px",
+        "padding": "8px 16px",
+        "background-color": "rgb(32, 32, 32)",
+        "border": "0px none rgb(255, 255, 255)",
+        "border-top": "0px none rgb(255, 255, 255)",
+        "border-bottom": "0px none rgb(255, 255, 255)",
+        "border-radius": "0px",
+        "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "font-size": "14px",
+        "font-weight": "400",
+        "letter-spacing": "normal",
+        "text-transform": "uppercase",
+        "color": "rgb(255, 255, 255)",
+        "line-height": "21px",
+        "align-items": "normal",
+        "justify-content": "normal",
+        "box-shadow": "none",
+        "background": "rgb(32, 32, 32) none repeat scroll 0% 0% / auto padding-box border-box"
+      }
+    },
+    "panel": {
+      "display": "block",
+      "grid-template-columns": "none",
+      "gap": "normal",
+      "column-gap": "normal",
+      "row-gap": "normal",
+      "padding": "0px",
+      "margin": "0px"
+    },
+    "cardCount": 0
+  }
+}

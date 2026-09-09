@@ -1,32 +1,34 @@
 /*
- * Table Block
- * Recreate a table
- * https://www.hlx.live/developer/block-collection/table
+ * Table Specs Block
+ * Renders a vertical list of spec rows (label + value) as a definition list,
+ * matching the WKND adventure-detail content fragment sidebar.
  */
 
 /**
- *
  * @param {Element} block
  */
 export default async function decorate(block) {
-  const table = document.createElement('table');
-  const thead = document.createElement('thead');
-  const tbody = document.createElement('tbody');
-  const header = !block.classList.contains('no-header');
+  const dl = document.createElement('dl');
+  dl.className = 'table-specs-list';
 
-  [...block.children].forEach((row, i) => {
-    const tr = document.createElement('tr');
+  [...block.children].forEach((row) => {
+    const cells = [...row.children];
+    if (!cells.length) return;
 
-    [...row.children].forEach((cell) => {
-      const td = document.createElement(i === 0 && header ? 'th' : 'td');
+    const rowEl = document.createElement('div');
+    rowEl.className = 'table-specs-row';
 
-      if (i === 0) td.setAttribute('scope', 'column');
-      td.innerHTML = cell.innerHTML;
-      tr.append(td);
-    });
-    if (i === 0 && header) thead.append(tr);
-    else tbody.append(tr);
+    const dt = document.createElement('dt');
+    dt.className = 'table-specs-label';
+    dt.innerHTML = cells[0] ? cells[0].innerHTML : '';
+
+    const dd = document.createElement('dd');
+    dd.className = 'table-specs-value';
+    dd.innerHTML = cells[1] ? cells[1].innerHTML : '';
+
+    rowEl.append(dt, dd);
+    dl.append(rowEl);
   });
-  table.append(thead, tbody);
-  block.replaceChildren(table);
+
+  block.replaceChildren(dl);
 }

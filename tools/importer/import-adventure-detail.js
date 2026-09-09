@@ -48,11 +48,49 @@ function findBlocksOnPage(document, template) {
   return pageBlocks;
 }
 
+// Append key/value rows to the Metadata block produced by
+// WebImporter.rules.createMetadata. That helper builds a <table> whose header
+// cell reads "Metadata"; each field is a <tr><td>key</td><td>value</td></tr>.
+// These rows become page metadata (and query-index columns). Blank values are
+// skipped; an existing key is not duplicated.
+function appendMetadata(main, document, fields) {
+  const tables = [...main.querySelectorAll('table')];
+  const table = tables.find((t) => {
+    const th = t.querySelector('tr th, tr td');
+    return th && th.textContent.trim().toLowerCase() === 'metadata';
+  });
+  if (!table) return;
+  const existing = new Set(
+    [...table.querySelectorAll('tr')]
+      .map((tr) => tr.querySelector('td')?.textContent.trim().toLowerCase())
+      .filter(Boolean),
+  );
+  Object.entries(fields)
+    .filter(([k, v]) => v && String(v).trim() && !existing.has(k.toLowerCase()))
+    .forEach(([key, value]) => {
+      const tr = document.createElement('tr');
+      const k = document.createElement('td');
+      k.textContent = key;
+      const v = document.createElement('td');
+      v.textContent = String(value).trim();
+      tr.append(k, v);
+      table.append(tr);
+    });
+}
+
 export default {
   transform: (payload) => {
     const { document, url, html, params } = payload;
     const main = document.body;
     executeTransformers('beforeTransform', main, payload);
+
+    // Capture the adventure "Activity" spec (Climbing/Cycling/Skiing/Surfing/
+    // Travel/…) BEFORE the parsers replace the content-fragment element — used
+    // as the query-index Category so the adventures filter is index-driven.
+    let category = '';
+    const activityEl = document.querySelector('.cmp-contentfragment__element--activity .cmp-contentfragment__element-value');
+    if (activityEl) category = activityEl.textContent.trim();
+
     const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
     pageBlocks.forEach((block) => {
       if (!block.element.parentNode) return;
@@ -62,10 +100,14 @@ export default {
         catch (e) { console.error(`Failed to parse ${block.name} (${block.selector}):`, e); }
       }
     });
+
+
     executeTransformers('afterTransform', main, payload);
     const hr = document.createElement('hr');
     main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
+    // Add Template + Category so the page metadata (and query index) carry them.
+    appendMetadata(main, document, { Template: PAGE_TEMPLATE.name, Category: category });
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
     const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html?$/, '');

@@ -104,9 +104,24 @@ export default {
     // 2. Find blocks on page
     const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
 
-    // 3. Parse each block using registered parsers
+    // 3. Parse each block using registered parsers.
+    //    The homepage has two cards-article grids: the FIRST ("Recent Articles")
+    //    becomes a dynamic latest-4 article listing; the SECOND ("Next
+    //    Adventures") becomes a dynamic latest-4 adventure listing. Both are
+    //    swapped for a config table the block reads at render time.
+    let cardGridIndex = 0;
     pageBlocks.forEach((block) => {
       if (!block.element.parentNode) return; // Already replaced by earlier parser
+      if (block.name === 'cards-article') {
+        const source = cardGridIndex === 0 ? 'articles' : 'adventures';
+        cardGridIndex += 1;
+        const table = WebImporter.Blocks.createBlock(document, {
+          name: 'cards-article',
+          cells: [[source], ['4']],
+        });
+        block.element.replaceWith(table);
+        return;
+      }
       const parser = parsers[block.name];
       if (parser) {
         try {

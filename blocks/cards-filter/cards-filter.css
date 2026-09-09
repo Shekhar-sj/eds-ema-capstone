@@ -1,58 +1,115 @@
+/* ---- Filter tab bar ---- */
 .cards-filter .cards-filter-tablist {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin: 0 0 24px;
+  gap: 0;
+  margin: 18px 0;
   padding: 0;
 }
 
 .cards-filter .cards-filter-tab {
   appearance: none;
-  border: 1px solid #dadada;
-  background: var(--background-color);
+  border: none;
+  border-radius: 0;
+  background: transparent;
   color: var(--text-color);
-  font: inherit;
+  font-family: var(--body-font-family);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: normal;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: var(--body-font-size-s, 14px);
   padding: 8px 16px;
   cursor: pointer;
 }
 
 .cards-filter .cards-filter-tab[aria-selected="true"] {
-  background: var(--text-color, #000);
-  color: var(--background-color, #fff);
-  border-color: var(--text-color, #000);
+  background: var(--text-color);
+  color: var(--background-color);
 }
 
+/* ---- Card grid (mirrors cards-article) ---- */
 .cards-filter > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+
+@media (width >= 600px) {
+  .cards-filter > ul {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 14px;
+  }
+}
+
+@media (width >= 900px) {
+  .cards-filter > ul {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px 14px;
+  }
 }
 
 .cards-filter > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+  min-width: 0;
+  border: none;
+  background-color: transparent;
 }
 
 .cards-filter > ul > li[hidden] {
   display: none;
 }
 
-.cards-filter .cards-filter-card-body {
-  margin: 16px;
-}
-
 .cards-filter .cards-filter-card-image {
   line-height: 0;
 }
 
-.cards-filter > ul > li img {
+.cards-filter .cards-filter-card-image img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 13 / 10;
   object-fit: cover;
+  border-radius: 0;
+}
+
+/* card body: title (h3 > a) + description (p) */
+.cards-filter .cards-filter-card-body {
+  min-width: 0;
+  margin: 2px 0 0;
+}
+
+.cards-filter .cards-filter-card-body h3 {
+  margin: 0 0 16px;
+  font-family: var(--body-font-family);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 27px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+
+.cards-filter .cards-filter-card-body h3 a:any-link {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.cards-filter .cards-filter-card-body h3 a:hover {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+/* single-line truncated description */
+.cards-filter .cards-filter-card-body p {
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: #696969;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

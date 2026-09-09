@@ -42,6 +42,29 @@ var CustomImportScript = (() => {
   });
 
   // tools/importer/parsers/cards-profile.js
+  function precedingHeadingText(tile) {
+    const isSectionHeading = (node) => {
+      if (!node || !node.matches) return false;
+      if (!node.matches("h1, h2")) return false;
+      return !node.closest(".cmp-experience-fragment--contributor");
+    };
+    let el = tile;
+    while (el) {
+      let sib = el.previousElementSibling;
+      while (sib) {
+        let h = null;
+        if (isSectionHeading(sib)) h = sib;
+        else if (sib.querySelector) {
+          const cand = sib.querySelector("h1, h2");
+          if (isSectionHeading(cand)) h = cand;
+        }
+        if (h && h.textContent.trim()) return h.textContent.trim();
+        sib = sib.previousElementSibling;
+      }
+      el = el.parentElement;
+    }
+    return "";
+  }
   function buildCardRow(tile, document) {
     const img = tile.querySelector(".cmp-image img, .image img, img");
     const nameEl = tile.querySelector("h3.cmp-title__text, .cmp-title h3, h3");
@@ -77,9 +100,21 @@ var CustomImportScript = (() => {
     const SELECTOR = ".experiencefragment.cmp-experience-fragment--contributor";
     const tiles = Array.from(document.querySelectorAll(SELECTOR));
     if (tiles.length === 0) return;
-    if (element !== tiles[0]) return;
-    const cells = [];
+    const groups = [];
+    let lastHeading = null;
     tiles.forEach((tile) => {
+      const heading = precedingHeadingText(tile);
+      if (groups.length === 0 || heading !== lastHeading) {
+        groups.push([tile]);
+        lastHeading = heading;
+      } else {
+        groups[groups.length - 1].push(tile);
+      }
+    });
+    const group = groups.find((g) => g[0] === element);
+    if (!group) return;
+    const cells = [];
+    group.forEach((tile) => {
       const row = buildCardRow(tile, document);
       if (row) cells.push(row);
     });
@@ -88,7 +123,7 @@ var CustomImportScript = (() => {
       return;
     }
     const block = WebImporter.Blocks.createBlock(document, { name: "cards-profile", cells });
-    tiles.slice(1).forEach((tile) => tile.remove());
+    group.slice(1).forEach((tile) => tile.remove());
     element.replaceWith(block);
   }
 
@@ -116,6 +151,13 @@ var CustomImportScript = (() => {
         "noscript",
         "link"
       ]);
+      const h1 = element.querySelector("h1");
+      if (h1) {
+        const titleText = h1.textContent.trim().toLowerCase();
+        element.querySelectorAll("h2, h3, h4").forEach((h) => {
+          if (h.textContent.trim().toLowerCase() === titleText) h.remove();
+        });
+      }
     }
   }
 

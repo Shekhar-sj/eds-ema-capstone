@@ -171,6 +171,13 @@ var CustomImportScript = (() => {
         "noscript",
         "link"
       ]);
+      const h1 = element.querySelector("h1");
+      if (h1) {
+        const titleText = h1.textContent.trim().toLowerCase();
+        element.querySelectorAll("h2, h3, h4").forEach((h) => {
+          if (h.textContent.trim().toLowerCase() === titleText) h.remove();
+        });
+      }
     }
   }
 
@@ -248,8 +255,19 @@ var CustomImportScript = (() => {
       const main = document.body;
       executeTransformers("beforeTransform", main, payload);
       const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
+      let cardGridIndex = 0;
       pageBlocks.forEach((block) => {
         if (!block.element.parentNode) return;
+        if (block.name === "cards-article") {
+          const source = cardGridIndex === 0 ? "articles" : "adventures";
+          cardGridIndex += 1;
+          const table = WebImporter.Blocks.createBlock(document, {
+            name: "cards-article",
+            cells: [[source], ["4"]]
+          });
+          block.element.replaceWith(table);
+          return;
+        }
         const parser = parsers[block.name];
         if (parser) {
           try {

@@ -1,0 +1,126 @@
+{
+  "list": {
+    "tag": "UL",
+    "cls": "cmp-image-list",
+    "style": {
+      "display": "flex",
+      "grid-template-columns": "none",
+      "gap": "normal",
+      "column-gap": "normal",
+      "row-gap": "normal",
+      "flex-wrap": "wrap",
+      "flex-direction": "row",
+      "padding": "0px",
+      "margin": "0px",
+      "list-style": "outside none none",
+      "justify-content": "normal"
+    },
+    "rect": {
+      "w": 1136
+    },
+    "childCount": 16
+  },
+  "item": {
+    "cls": "cmp-image-list__item",
+    "style": {
+      "display": "list-item",
+      "width": "260px",
+      "flex": "0 1 260px",
+      "flex-basis": "260px",
+      "margin": "0px 0px 32px",
+      "padding": "0px 14px 0px 0px",
+      "box-sizing": "content-box",
+      "vertical-align": "baseline"
+    },
+    "rect": {
+      "w": 274,
+      "h": 271
+    }
+  },
+  "img": {
+    "style": {
+      "width": "260px",
+      "height": "200px",
+      "aspect-ratio": "auto 1600 / 899",
+      "object-fit": "cover",
+      "border-radius": "0px",
+      "display": "inline",
+      "margin": "0px"
+    },
+    "rect": {
+      "w": 260,
+      "h": 200,
+      "ratio": "1.300"
+    }
+  },
+  "imgLink": {
+    "cls": "cmp-image-list__item-image-link",
+    "style": {
+      "display": "inline",
+      "width": "auto",
+      "height": "auto",
+      "margin": "0px",
+      "padding": "0px"
+    },
+    "rect": {
+      "w": 260,
+      "h": 207
+    }
+  },
+  "title": {
+    "cls": "cmp-image-list__item-title-link",
+    "style": {
+      "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "font-size": "18px",
+      "font-weight": "400",
+      "line-height": "27px",
+      "letter-spacing": "normal",
+      "text-transform": "none",
+      "color": "rgb(0, 69, 255)",
+      "margin": "0px",
+      "text-decoration": "none",
+      "display": "inline",
+      "padding": "0px"
+    }
+  },
+  "titleLink": {
+    "text": "Bali Surf Camp",
+    "cls": "cmp-image-list__item-title-link",
+    "style": {
+      "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "font-size": "18px",
+      "font-weight": "400",
+      "line-height": "27px",
+      "letter-spacing": "normal",
+      "text-transform": "none",
+      "color": "rgb(0, 69, 255)",
+      "text-decoration": "none",
+      "margin": "0px",
+      "display": "inline",
+      "padding": "0px"
+    }
+  },
+  "desc": {
+    "cls": "cmp-image-list__item-description",
+    "style": {
+      "font-family": "\"Source Sans Pro\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+      "font-size": "14px",
+      "font-weight": "400",
+      "line-height": "21px",
+      "letter-spacing": "normal",
+      "text-transform": "uppercase",
+      "color": "rgb(105, 105, 105)",
+      "margin": "16px 0px 0px",
+      "padding": "0px",
+      "display": "block"
+    }
+  },
+  "itemChildren": [
+    {
+      "tag": "ARTICLE",
+      "cls": "cmp-image-list__item-content",
+      "mb": "0px",
+      "mt": "0px"
+    }
+  ]
+}
