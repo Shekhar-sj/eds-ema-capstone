@@ -1,0 +1,33 @@
+/* Social Links — a row of square icon buttons (WKND footer style):
+   48x48 light-grey squares with a dark glyph, flush together. */
+.social-links .social-links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0;
+}
+
+.social-links .social-links-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background-color: var(--light-color);
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.social-links .social-links-item:hover,
+.social-links .social-links-item:focus-visible {
+  background-color: #fff;
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+.social-links .social-links-item svg {
+  width: 20px;
+  height: 20px;
+  fill: currentcolor;
+}

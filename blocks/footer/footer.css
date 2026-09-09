@@ -4,14 +4,10 @@ footer {
   font-size: var(--body-font-size-xs);
 }
 
-footer .footer > div {
+footer .footer {
   margin: auto;
   max-width: 1200px;
   padding: 40px 24px 24px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 16px 40px;
 }
 
 footer .footer p {
@@ -25,7 +21,7 @@ footer .footer img {
   height: auto;
 }
 
-/* nav + social link lists render inline */
+/* nav link list */
 footer .footer ul {
   list-style: none;
   margin: 0;
@@ -48,38 +44,65 @@ footer .footer a:hover {
   text-decoration: underline;
 }
 
-/* Social icon buttons (Follow Us) — match source: 48x48 light-grey squares
-   with a dark glyph, no gap between them, decorated by footer.js. */
-footer .footer ul.footer-social {
-  gap: 0;
+/* "Follow Us" label (the last <p> in the top section's default content) */
+footer .footer .social-links-container .default-content-wrapper p:last-of-type {
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-top: 8px;
 }
 
-footer .footer ul.footer-social a.footer-social-link:any-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  background-color: var(--light-color);
-  color: var(--text-color);
+/* Copyright + description block (second section) */
+footer .footer .section:last-child .default-content-wrapper {
+  margin-top: 24px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+footer .footer .section:last-child p {
+  margin: 0 0 12px;
+  font-size: var(--body-font-size-xs);
+  line-height: 1.6;
+}
+
+footer .footer .section:last-child a:any-link {
   text-transform: none;
-  text-decoration: none;
+  font-size: inherit;
+  text-decoration: underline;
 }
 
-footer .footer ul.footer-social a.footer-social-link:hover {
-  background-color: #fff;
-  color: var(--text-color);
-  text-decoration: none;
-}
-
-footer .footer ul.footer-social a.footer-social-link svg {
-  width: 20px;
-  height: 20px;
-  fill: currentcolor;
-}
-
+/* Desktop: top section becomes a horizontal band —
+   left: logo + nav + Follow Us (default content); right: social icons.
+   Structure: .social-links-container > [.default-content-wrapper, .social-links-wrapper] */
 @media (width >= 900px) {
-  footer .footer > div {
+  footer .footer {
     padding: 40px 32px 24px;
+  }
+
+  footer .footer .social-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px 48px;
+  }
+
+  /* left column: logo + nav + Follow Us laid out in a row */
+  footer .footer .social-links-container .default-content-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 48px;
+    flex: 1 1 auto;
+  }
+
+  /* the social icons sit at the far right */
+  footer .footer .social-links-wrapper {
+    margin-left: auto;
+  }
+
+  /* "Follow Us" label sits just left of the icons on desktop */
+  footer .footer .social-links-container .default-content-wrapper p:last-of-type {
+    margin-top: 0;
+    margin-left: auto;
   }
 }
