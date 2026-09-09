@@ -39,9 +39,9 @@ indices:
       category:
         select: head > meta[name="category"]
         value: attribute(el, 'content')
-      # Populated automatically by the pipeline from the page's publish time.
-      # The cards-article / cards-filter blocks sort by this (newest first),
-      # so republishing a page moves it up the listing with no manual upkeep.
-      lastModified:
-        select: none
-        value: parseTimestamp(headers('last-modified'), 'ddd, DD MMM YYYY hh:mm:ss GMT')
+      # NOTE: do NOT define a `lastModified` property. The indexer adds
+      # `lastModified` automatically as a built-in column (a Unix timestamp from
+      # the page's publish time) — configuring it (and there is no HTTP-header
+      # function available) causes a 400 in the Index Admin editor. The
+      # cards-article / cards-filter blocks sort by that built-in value, so
+      # republishing a page moves it up the listing with no manual upkeep.

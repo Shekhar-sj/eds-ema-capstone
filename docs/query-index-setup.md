@@ -21,10 +21,17 @@ automatic way is a **pipeline-generated index configured at tools.aem.live**.
 ## Set up the automatic index (recommended)
 
 1. Open <https://tools.aem.live> and select `shekhar-sj/eds-ema-capstone`.
-2. Go to the **Index** editor and create an index named `default` producing
-   `/query-index.json`, using the definition in `helix-query.yaml` at the repo
-   root (include `/us/en/**`; properties: title, description, image, template,
-   category, and **lastModified** from the page's publish time).
+2. In the **Index Admin** editor (tools.aem.live → Index Admin), set
+   Include `/us/en/**` and add only these five properties — each needs a
+   SELECT/SELECT-FIRST value or the save returns 400:
+   - `title` → `meta[property="og:title"]` → `attribute(el, "content")`
+   - `description` → `meta[name="description"]` → `attribute(el, "content")`
+   - `image` → `meta[property="og:image"]` → `attribute(el, "content")`
+   - `template` → `meta[name="template"]` → `attribute(el, "content")`
+   - `category` → `meta[name="category"]` → `attribute(el, "content")`
+   **Do NOT add a `lastModified` property** — the indexer adds it automatically
+   as a built-in column (Unix timestamp from publish time). Adding it with an
+   empty selector is what triggers the 400 Bad Request.
 3. Ensure detail pages expose the fields as meta tags (they already do):
    `og:title`, `description`, `og:image`, `template`, and `category`
    (adventures). Republish any page missing them.
