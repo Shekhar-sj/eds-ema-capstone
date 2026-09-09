@@ -149,6 +149,13 @@ var CustomImportScript = (() => {
         "noscript",
         "link"
       ]);
+      const h1 = element.querySelector("h1");
+      if (h1) {
+        const titleText = h1.textContent.trim().toLowerCase();
+        element.querySelectorAll("h2, h3, h4").forEach((h) => {
+          if (h.textContent.trim().toLowerCase() === titleText) h.remove();
+        });
+      }
     }
   }
 
@@ -192,11 +199,24 @@ var CustomImportScript = (() => {
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
+  function addMetaTags(document, fields) {
+    const head = document.head || document.querySelector("head");
+    if (!head) return;
+    Object.entries(fields).filter(([, v]) => v && String(v).trim()).forEach(([name, value]) => {
+      const meta = document.createElement("meta");
+      meta.setAttribute("name", name.toLowerCase());
+      meta.setAttribute("content", String(value).trim());
+      head.append(meta);
+    });
+  }
   var import_adventure_detail_default = {
     transform: (payload) => {
       const { document, url, html, params } = payload;
       const main = document.body;
       executeTransformers("beforeTransform", main, payload);
+      let category = "";
+      const activityEl = document.querySelector(".cmp-contentfragment__element--activity .cmp-contentfragment__element-value");
+      if (activityEl) category = activityEl.textContent.trim();
       const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
       pageBlocks.forEach((block) => {
         if (!block.element.parentNode) return;
@@ -209,6 +229,7 @@ var CustomImportScript = (() => {
           }
         }
       });
+      addMetaTags(document, { Template: PAGE_TEMPLATE.name, Category: category });
       executeTransformers("afterTransform", main, payload);
       const hr = document.createElement("hr");
       main.appendChild(hr);

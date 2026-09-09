@@ -1,3 +1,108 @@
+/* ==========================================================================
+   Adventure-detail two-column page layout
+   --------------------------------------------------------------------------
+   Kept here (the right/primary column block) so all two-column rules live in
+   one place. The adventure-detail section renders as a single .section with
+   classes carousel-hero-container + table-specs-container + tabs-detail-container
+   whose direct children are flat, interleaved wrappers in this fixed order:
+
+     1. .default-content-wrapper   -> breadcrumb        (full width)
+     2. .carousel-hero-wrapper     -> hero carousel     (full bleed)
+     3. .default-content-wrapper   -> H1 title          (full width)
+     4. .table-specs-wrapper       -> LEFT column  (~291px / 25%)
+     5. .default-content-wrapper   -> "Share this Adventure" (LEFT, under specs) [optional]
+     6. .tabs-detail-wrapper       -> RIGHT column (~873px / 75%, same row as specs)
+
+   Source (wknd.site): content region ~1164px centered; left 291px, right 873px
+   (exactly 1:3). We drive this with CSS grid + explicit placement because the
+   interleaved default-content wrappers defeat auto-placement. On <900px the
+   grid is not applied, so wrappers keep the default stacked full-width flow.
+   ========================================================================== */
+
+@media (width >= 900px) {
+  main .section.table-specs-container.tabs-detail-container {
+    display: grid;
+    grid-template-columns:
+      [full-start] minmax(24px, 1fr)
+      [content-start] minmax(0, 291px)
+      [right-start] minmax(0, 873px)
+      [content-end] minmax(24px, 1fr) [full-end];
+    align-items: start;
+    gap: 0;
+  }
+
+  /* Row 1: breadcrumb — full content width */
+  main .section.table-specs-container.tabs-detail-container
+    > .default-content-wrapper:first-child {
+    grid-row: 1;
+    grid-column: content-start / content-end;
+    max-width: none;
+    margin: 0;
+    padding: 0 14px;
+  }
+
+  /* Row 2: hero carousel — full bleed edge to edge
+     (carousel-hero.css already zeroes its own max-width/padding) */
+  main .section.table-specs-container.tabs-detail-container
+    > .carousel-hero-wrapper {
+    grid-row: 2;
+    grid-column: full-start / full-end;
+
+    /* Global `main > .section > div { margin: auto }` would disable grid
+       stretch (auto margins) and collapse the hero to fit-content; force
+       full-bleed stretch instead. */
+    justify-self: stretch;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Row 3: H1 title — full content width. It is the default-content wrapper
+     that immediately precedes the specs column. */
+  main .section.table-specs-container.tabs-detail-container
+    > .default-content-wrapper:nth-child(3) {
+    grid-row: 3;
+    grid-column: content-start / content-end;
+    max-width: none;
+    margin: 0;
+    padding: 0 14px;
+  }
+
+  /* Row 4: LEFT column — table specs sidebar */
+  main .section.table-specs-container.tabs-detail-container
+    > .table-specs-wrapper {
+    grid-row: 4;
+    grid-column: content-start / right-start;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Row 5: LEFT column — "Share this Adventure" beneath the specs (optional).
+     Adjacent-sibling selector matches it only when present. */
+  main .section.table-specs-container.tabs-detail-container
+    > .table-specs-wrapper + .default-content-wrapper {
+    grid-row: 5;
+    grid-column: content-start / right-start;
+    align-self: start;
+    max-width: none;
+    margin: 0;
+    padding: 24px 14px 0;
+  }
+
+  /* RIGHT column — tabs. Starts on the specs row and spans down past the
+     optional "Share" row so the tall tab content defines the region height. */
+  main .section.table-specs-container.tabs-detail-container
+    > .tabs-detail-wrapper {
+    grid-row: 4 / span 2;
+    grid-column: right-start / content-end;
+    align-self: start;
+    max-width: none;
+    margin: 0;
+    padding: 0 0 0 14px;
+  }
+}
+
 /* Tab list — horizontal row of tabs, no gap (tabs butt together) */
 .tabs-detail .tabs-detail-list {
   display: flex;

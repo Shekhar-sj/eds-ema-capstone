@@ -48,11 +48,14 @@ function findBlocksOnPage(document, template) {
   return pageBlocks;
 }
 
+
 export default {
   transform: (payload) => {
     const { document, url, html, params } = payload;
     const main = document.body;
     executeTransformers('beforeTransform', main, payload);
+
+
     const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
     pageBlocks.forEach((block) => {
       if (!block.element.parentNode) return;
@@ -62,6 +65,8 @@ export default {
         catch (e) { console.error(`Failed to parse ${block.name} (${block.selector}):`, e); }
       }
     });
+
+
     executeTransformers('afterTransform', main, payload);
     const hr = document.createElement('hr');
     main.appendChild(hr);

@@ -12,12 +12,46 @@
  *
  * The import script calls this parser ONCE PER matched
  * `.experiencefragment.cmp-experience-fragment--contributor` element (7 tiles on
- * the About Us page). Strategy: only the FIRST contributor tile (document order)
- * builds the block, gathering ALL contributor tiles into one 2-column block (one
- * row per person) and removing the remaining tiles. Every other invocation is a
- * no-op, so the order of parser calls is irrelevant. The section headings
- * ("Our Contributors", "WKND Guides") remain as default content around the block.
+ * the About Us page). The tiles are split into groups by the section headings
+ * that precede them ("Our Contributors" → 4 tiles, "WKND Guides" → 3 tiles): a
+ * new group starts at any tile whose nearest preceding heading differs from the
+ * previous tile's. Each group becomes its own 2-column cards-profile block, built
+ * in place of that group's FIRST tile (the rest of the group's tiles are removed).
+ * Every other invocation is a no-op, so parser-call order is irrelevant. The
+ * section headings remain as default content between the two blocks.
  */
+
+/**
+ * Text of the nearest SECTION heading that precedes `tile` in document order —
+ * used to detect the group boundary between "Our Contributors" and "WKND Guides".
+ * Only h1/h2 count as section headings; the per-tile name/role headings (h3/h5
+ * inside a contributor tile) are ignored so they don't create false boundaries.
+ * Returns '' if none.
+ */
+function precedingHeadingText(tile) {
+  const isSectionHeading = (node) => {
+    if (!node || !node.matches) return false;
+    if (!node.matches('h1, h2')) return false;
+    // Ignore headings that live inside a contributor tile (per-person titles).
+    return !node.closest('.cmp-experience-fragment--contributor');
+  };
+  let el = tile;
+  while (el) {
+    let sib = el.previousElementSibling;
+    while (sib) {
+      let h = null;
+      if (isSectionHeading(sib)) h = sib;
+      else if (sib.querySelector) {
+        const cand = sib.querySelector('h1, h2');
+        if (isSectionHeading(cand)) h = cand;
+      }
+      if (h && h.textContent.trim()) return h.textContent.trim();
+      sib = sib.previousElementSibling;
+    }
+    el = el.parentElement;
+  }
+  return '';
+}
 
 function buildCardRow(tile, document) {
   // Avatar image — validated against source.html (.cmp-image img)
@@ -68,14 +102,32 @@ export default function parse(element, { document }) {
   const SELECTOR = '.experiencefragment.cmp-experience-fragment--contributor';
   const tiles = Array.from(document.querySelectorAll(SELECTOR));
 
-  // All tiles already consumed (block built + siblings removed on an earlier call).
+  // All tiles already consumed (blocks built + siblings removed on an earlier call).
   if (tiles.length === 0) return;
 
-  // Only the first tile (document order) builds the aggregate block.
-  if (element !== tiles[0]) return;
+  // Split tiles into contiguous groups by the section heading that precedes each
+  // one. A new group begins whenever a tile's nearest preceding heading differs
+  // from the previous tile's (e.g. "Our Contributors" → "WKND Guides"). This keeps
+  // each section's people in their own block, split 4/3 on the About Us page.
+  const groups = [];
+  let lastHeading = null;
+  tiles.forEach((tile) => {
+    const heading = precedingHeadingText(tile);
+    if (groups.length === 0 || heading !== lastHeading) {
+      groups.push([tile]);
+      lastHeading = heading;
+    } else {
+      groups[groups.length - 1].push(tile);
+    }
+  });
+
+  // Each group is built in place of its FIRST tile. Only act when `element` is a
+  // group leader; other invocations are no-ops (parser-call order is irrelevant).
+  const group = groups.find((g) => g[0] === element);
+  if (!group) return;
 
   const cells = [];
-  tiles.forEach((tile) => {
+  group.forEach((tile) => {
     const row = buildCardRow(tile, document);
     if (row) cells.push(row);
   });
@@ -88,8 +140,8 @@ export default function parse(element, { document }) {
 
   const block = WebImporter.Blocks.createBlock(document, { name: 'cards-profile', cells });
 
-  // Remove the remaining contributor tiles; their content is now inside the block.
-  tiles.slice(1).forEach((tile) => tile.remove());
+  // Remove this group's remaining tiles; their content is now inside the block.
+  group.slice(1).forEach((tile) => tile.remove());
 
   element.replaceWith(block);
 }

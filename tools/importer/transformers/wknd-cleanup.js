@@ -42,5 +42,18 @@ export default function transform(hookName, element, payload) {
       'noscript',
       'link',
     ]);
+
+    // Article pages (magazine) repeat the page title inside the article body:
+    // the content fragment renders its own title as a heading that duplicates
+    // the page <h1>. Drop later headings whose text exactly matches the first
+    // <h1> so the title shows once (matches wknd.site). Safe/no-op on pages
+    // without such a duplicate.
+    const h1 = element.querySelector('h1');
+    if (h1) {
+      const titleText = h1.textContent.trim().toLowerCase();
+      element.querySelectorAll('h2, h3, h4').forEach((h) => {
+        if (h.textContent.trim().toLowerCase() === titleText) h.remove();
+      });
+    }
   }
 }
