@@ -159,22 +159,26 @@ var CustomImportScript = (() => {
     return pageBlocks;
   }
   function appendMetadata(main, document, fields) {
-    const entries = Object.entries(fields).filter(([, v]) => v && String(v).trim());
-    if (!entries.length) return;
-    let table = main.querySelector(".metadata");
-    if (!table) {
-      table = document.createElement("div");
-      table.className = "metadata";
-      main.append(table);
-    }
-    entries.forEach(([key, value]) => {
-      const row = document.createElement("div");
-      const k = document.createElement("div");
+    const tables = [...main.querySelectorAll("table")];
+    const table = tables.find((t) => {
+      const th = t.querySelector("tr th, tr td");
+      return th && th.textContent.trim().toLowerCase() === "metadata";
+    });
+    if (!table) return;
+    const existing = new Set(
+      [...table.querySelectorAll("tr")].map((tr) => {
+        var _a;
+        return (_a = tr.querySelector("td")) == null ? void 0 : _a.textContent.trim().toLowerCase();
+      }).filter(Boolean)
+    );
+    Object.entries(fields).filter(([k, v]) => v && String(v).trim() && !existing.has(k.toLowerCase())).forEach(([key, value]) => {
+      const tr = document.createElement("tr");
+      const k = document.createElement("td");
       k.textContent = key;
-      const v = document.createElement("div");
+      const v = document.createElement("td");
       v.textContent = String(value).trim();
-      row.append(k, v);
-      table.append(row);
+      tr.append(k, v);
+      table.append(tr);
     });
   }
   var import_article_detail_default = {
