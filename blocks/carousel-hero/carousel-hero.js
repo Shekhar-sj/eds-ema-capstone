@@ -150,4 +150,21 @@ export default async function decorate(block) {
   if (!isSingleSlide) {
     bindEvents(block);
   }
+
+  // SEO/accessibility: a page needs exactly one <h1>. The imported hero slides
+  // use <h2> titles and the homepage has no other <h1>. When this hero is the
+  // first block on the page and the page still lacks an <h1>, promote the first
+  // slide's heading to <h1> so the document has a valid top-level heading.
+  const firstSection = document.querySelector('main > .section');
+  const heroInFirstSection = firstSection && firstSection.contains(block);
+  if (heroInFirstSection && !document.querySelector('main h1')) {
+    const firstHeading = block.querySelector('.carousel-hero-slide h2, .carousel-hero-slide h3');
+    if (firstHeading) {
+      const h1 = document.createElement('h1');
+      h1.id = firstHeading.id;
+      h1.className = firstHeading.className;
+      while (firstHeading.firstChild) h1.append(firstHeading.firstChild);
+      firstHeading.replaceWith(h1);
+    }
+  }
 }
