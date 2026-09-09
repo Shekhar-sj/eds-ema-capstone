@@ -1,63 +1,48 @@
-# Dynamic listings & query-index setup
+# Dynamic listings & query-index
 
-The homepage, magazine, and adventures listings are **dynamic**: instead of
-shipping static cards, each listing block reads `/query-index.json` at render
-time and builds cards from it.
+The home page ("Recent Articles" / "Next Adventures"), Magazine, and Adventures
+listings are index-driven: the `cards-article` and `cards-filter` blocks read
+`/query-index.json` at render time and build cards from it — no code change when
+content is added.
 
-## How it works
+## How ordering works
 
-- `scripts/ffetch.js` — `queryIndex()` fetches `/query-index.json` (paginated).
-- `blocks/cards-article/cards-article.js` — when its first row is a config
-  keyword (`articles` or `adventures`, optional second row = numeric limit), it
-  populates from the index filtered by template; otherwise it renders authored
-  static cards.
-- `blocks/cards-filter/cards-filter.js` — same pattern with keyword `adventures`;
-  builds category filter tabs from each row's `category` field.
+`cards-article` shows newest-first:
+- If the index has a **`lastModified`** column, it sorts by it (newest first).
+  A page you edit + republish rises to the top automatically.
+- If not (a hand-authored sheet), it falls back to **index row order**, treating
+  the LAST row as newest. To reorder you'd move the row, not edit the page.
 
-Config blocks authored into content:
+To get the "edit a page → it moves to the top" behavior, the index must carry
+`lastModified`. A **manually-authored DA sheet never gets it** (it only holds
+the columns you type, and republishing a page doesn't touch the sheet). The
+automatic way is a **pipeline-generated index configured at tools.aem.live**.
 
-| Page | Block | Config |
-|------|-------|--------|
-| `/us/en` (homepage) | cards-article ×2 | `articles` / `4`, then `adventures` / `4` |
-| `/us/en/magazine` | cards-article | `articles` (all) |
-| `/us/en/adventures` | cards-filter | `adventures` (all) |
+## Set up the automatic index (recommended)
 
-## query-index.json fields
+1. Open <https://tools.aem.live> and select `shekhar-sj/eds-ema-capstone`.
+2. Go to the **Index** editor and create an index named `default` producing
+   `/query-index.json`, using the definition in `helix-query.yaml` at the repo
+   root (include `/us/en/**`; properties: title, description, image, template,
+   category, and **lastModified** from the page's publish time).
+3. Ensure detail pages expose the fields as meta tags (they already do):
+   `og:title`, `description`, `og:image`, `template`, and `category`
+   (adventures). Republish any page missing them.
+4. Publish/preview to trigger the first index build. From then on, publishing a
+   page updates its row (and `lastModified`) automatically.
 
-Each detail page contributes one row:
+Once the pipeline index is live, delete the hand-authored `query-index` sheet in
+DA so the two don't compete — the pipeline `/query-index.json` takes over, and
+the listing blocks keep working unchanged (they already sort by `lastModified`).
 
-| Field | Source |
+## Fields per row
+
+| field | source |
 |-------|--------|
-| `path` | page path (no extension) |
-| `title` | page title |
-| `description` | meta description |
-| `image` | hero content image (first non-logo raster image in `main`) |
-| `template` | `article-detail` / `adventure-detail` / … |
-| `category` | adventure "Activity" spec (Surfing/Cycling/Skiing/Rock Climbing/Camping/…) — adventures only |
-| `lastModified` | (optional) for newest-first sort |
-
-The local `content/query-index.json` is a generated seed so listings work in
-preview before the production index exists. **On aem.live the index is produced
-by the pipeline**, not this file — configure it once at **tools.aem.live**:
-
-## Configure the index at tools.aem.live
-
-1. Open the site config at <https://tools.aem.live/> for
-   `shekhar-sj/eds-ema-capstone`.
-2. Add an **index** named `default` producing `/query-index.json`, including
-   pages under `/us/en/**`.
-3. Map these properties (each reads a page metadata field or DOM value):
-   - `title` ← page title
-   - `description` ← `meta[name="description"]`
-   - `image` ← `meta[property="og:image"]` (or first content image)
-   - `template` ← `meta[name="template"]`
-   - `category` ← `meta[name="category"]`
-   - `lastModified` ← `<lastModified>`
-4. So the pipeline can read `template`/`category`, publish those as page
-   metadata. The detail pages should carry **Template** (and **Category** for
-   adventures) in their metadata block; add them in the document/DA source or via
-   the importer if not already present.
-5. Republish the detail pages so the index populates.
-
-Until the production index is live, the blocks fall back gracefully: an empty or
-missing `/query-index.json` yields an empty (not broken) listing.
+| path | page path |
+| title | `og:title` |
+| description | `meta[name=description]` |
+| image | `og:image` (card thumbnail) |
+| template | `meta[name=template]` — `article-detail` / `adventure-detail` drives which listing shows the card |
+| category | `meta[name=category]` — adventures filter tabs |
+| lastModified | page publish time (pipeline-populated) — sort key |
