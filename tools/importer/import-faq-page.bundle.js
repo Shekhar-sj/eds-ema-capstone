@@ -98,6 +98,13 @@ var CustomImportScript = (() => {
         "noscript",
         "link"
       ]);
+      const h1 = element.querySelector("h1");
+      if (h1) {
+        const titleText = h1.textContent.trim().toLowerCase();
+        element.querySelectorAll("h2, h3, h4").forEach((h) => {
+          if (h.textContent.trim().toLowerCase() === titleText) h.remove();
+        });
+      }
     }
   }
 
@@ -132,6 +139,29 @@ var CustomImportScript = (() => {
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
+  function appendMetadata(main, document, fields) {
+    const tables = [...main.querySelectorAll("table")];
+    const table = tables.find((t) => {
+      const th = t.querySelector("tr th, tr td");
+      return th && th.textContent.trim().toLowerCase() === "metadata";
+    });
+    if (!table) return;
+    const existing = new Set(
+      [...table.querySelectorAll("tr")].map((tr) => {
+        var _a;
+        return (_a = tr.querySelector("td")) == null ? void 0 : _a.textContent.trim().toLowerCase();
+      }).filter(Boolean)
+    );
+    Object.entries(fields).filter(([k, v]) => v && String(v).trim() && !existing.has(k.toLowerCase())).forEach(([key, value]) => {
+      const tr = document.createElement("tr");
+      const k = document.createElement("td");
+      k.textContent = key;
+      const v = document.createElement("td");
+      v.textContent = String(value).trim();
+      tr.append(k, v);
+      table.append(tr);
+    });
+  }
   var import_faq_page_default = {
     transform: (payload) => {
       const { document, url, params } = payload;
@@ -153,6 +183,7 @@ var CustomImportScript = (() => {
       const hr = document.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document);
+      appendMetadata(main, document, { Template: PAGE_TEMPLATE.name });
       WebImporter.rules.transformBackgroundImages(main, document);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html?$/, "");

@@ -25,6 +25,33 @@ function findBlocksOnPage(document, template) {
   console.log(`Found ${pageBlocks.length} block instances on page`);
   return pageBlocks;
 }
+// Append key/value rows to the Metadata block built by createMetadata (a <table>
+// whose header reads "Metadata"). Adds page metadata / query-index columns and
+// (via the template body class) enables template-scoped CSS. Skips blank/dupes.
+function appendMetadata(main, document, fields) {
+  const tables = [...main.querySelectorAll('table')];
+  const table = tables.find((t) => {
+    const th = t.querySelector('tr th, tr td');
+    return th && th.textContent.trim().toLowerCase() === 'metadata';
+  });
+  if (!table) return;
+  const existing = new Set(
+    [...table.querySelectorAll('tr')]
+      .map((tr) => tr.querySelector('td')?.textContent.trim().toLowerCase())
+      .filter(Boolean),
+  );
+  Object.entries(fields)
+    .filter(([k, v]) => v && String(v).trim() && !existing.has(k.toLowerCase()))
+    .forEach(([key, value]) => {
+      const tr = document.createElement('tr');
+      const k = document.createElement('td');
+      k.textContent = key;
+      const v = document.createElement('td');
+      v.textContent = String(value).trim();
+      tr.append(k, v);
+      table.append(tr);
+    });
+}
 export default {
   transform: (payload) => {
     const { document, url, params } = payload;
@@ -39,6 +66,7 @@ export default {
     executeTransformers('afterTransform', main, payload);
     const hr = document.createElement('hr'); main.appendChild(hr);
     WebImporter.rules.createMetadata(main, document);
+    appendMetadata(main, document, { Template: PAGE_TEMPLATE.name });
     WebImporter.rules.transformBackgroundImages(main, document);
     WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
     const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, '').replace(/\.html?$/, '');

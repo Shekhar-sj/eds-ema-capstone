@@ -96,6 +96,31 @@ h4 { font-size: var(--heading-font-size-m); }
 h5 { font-size: var(--heading-font-size-s); }
 h6 { font-size: var(--heading-font-size-xs); }
 
+/* WKND yellow section-heading underline (source: cmp-title--underline).
+   Applies to standalone section headings authored as default content — the
+   h2s that introduce a content section (Recent Articles, Current Adventures,
+   Our Contributors, article body headings, etc.). Block-owned headings (hero,
+   teaser, cards) live outside .default-content-wrapper, so they are excluded. */
+main .default-content-wrapper h2::after {
+  content: '';
+  display: block;
+  width: 84px;
+  margin-top: 18px;
+  border-bottom: 2px solid var(--accent-color);
+}
+
+/* Single-topic detail pages (FAQ, adventure detail) underline their page title
+   (h1); listing/article page titles do not — matches the source. Keyed on the
+   template body class set by decorateTemplateAndTheme from page metadata. */
+body.faq-page main .default-content-wrapper h1::after,
+body.adventure-detail main .default-content-wrapper h1::after {
+  content: '';
+  display: block;
+  width: 84px;
+  margin-top: 18px;
+  border-bottom: 2px solid var(--accent-color);
+}
+
 p,
 dl,
 ol,
