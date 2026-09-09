@@ -29,9 +29,15 @@ automatic way is a **pipeline-generated index configured at tools.aem.live**.
    - `image` → `meta[property="og:image"]` → `attribute(el, "content")`
    - `template` → `meta[name="template"]` → `attribute(el, "content")`
    - `category` → `meta[name="category"]` → `attribute(el, "content")`
-   **Do NOT add a `lastModified` property** — the indexer adds it automatically
-   as a built-in column (Unix timestamp from publish time). Adding it with an
-   empty selector is what triggers the 400 Bad Request.
+   Add a `lastModified` property so listings sort by recency. It reads the
+   HTTP Last-Modified response header — its **SELECT must be the literal word
+   `none`** (leave SELECT FIRST empty), with VALUE:
+   `parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")`.
+   Do NOT use `meta[name="last-modified"]` as the selector — that element does
+   not exist on the pages, so the value never evaluates and the row freezes at
+   a stale value (the symptom: republishing a page doesn't change its
+   lastModified in query-index.json). With `select: none`, the value
+   re-evaluates per document on every reindex.
 3. Ensure detail pages expose the fields as meta tags (they already do):
    `og:title`, `description`, `og:image`, `template`, and `category`
    (adventures). Republish any page missing them.
