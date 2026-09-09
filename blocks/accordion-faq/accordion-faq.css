@@ -84,3 +84,61 @@
 .accordion-faq .accordion-faq-item-body p {
   margin: 0;
 }
+
+/* ---------------------------------------------------------------------------
+ * FAQ PAGE TWO-COLUMN LAYOUT (source: wknd.site/us/en/faqs.html)
+ * ---------------------------------------------------------------------------
+ * Source renders the page as two columns centered within ~1164px:
+ *   LEFT  (~776px, ~66%): FAQs H1 + hero image + intro paragraph + accordion
+ *   RIGHT (~291px, ~25%): "Need more help?" contact block, top-aligned
+ *
+ * The migrated section (main > .section.accordion-faq-container) exposes three
+ * direct children (legitimate EDS section-layout hooks):
+ *   1. .default-content-wrapper  -> H1 + hero image + intro  (left, row 1)
+ *   2. .accordion-faq-wrapper    -> Q&A accordion            (left, row 2)
+ *   3. .default-content-wrapper  -> "Need more help?" contact (right sidebar)
+ * The contact content is fully separable (its own last wrapper), so a faithful
+ * grid layout is possible. Mobile (<900px) leaves the default stacking intact.
+ * --------------------------------------------------------------------------- */
+@media (width >= 900px) {
+  main > .section.accordion-faq-container {
+    display: grid;
+
+    /* 776 : 291 track ratio (~66% / ~25%), fr-based so it scales down cleanly */
+    grid-template-columns: minmax(0, 776fr) minmax(0, 291fr);
+    column-gap: min(97px, 7%);
+    align-items: start;
+
+    /* overall content ~1164px centered (source content x-origin ≈ 138px @1440) */
+    max-width: 1164px;
+    margin: 40px auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+  }
+
+  /* Neutralize the global `main > .section > div` centering/max-width so each
+     wrapper fills its own grid track instead of the 1200px content column. */
+  main > .section.accordion-faq-container > div {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* LEFT column: intro (row 1) then accordion (row 2) stacked */
+  main > .section.accordion-faq-container > .default-content-wrapper:first-child {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  main > .section.accordion-faq-container > .accordion-faq-wrapper {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  /* RIGHT sidebar: contact block, top-aligned next to the H1 */
+  main > .section.accordion-faq-container > .default-content-wrapper:last-child {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+  }
+}

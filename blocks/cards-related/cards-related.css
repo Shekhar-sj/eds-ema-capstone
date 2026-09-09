@@ -1,3 +1,67 @@
+/* =========================================================================
+   ARTICLE-DETAIL SECTION LAYOUT (two-column: article body + related sidebar)
+   -------------------------------------------------------------------------
+   The article-detail page renders ONE section whose container carries both
+   `columns-author-container` and `cards-related-container`. Inside it are FOUR
+   flat sibling wrappers (no shared parent per column):
+     1. .default-content-wrapper   -> hero image, breadcrumb, H1, byline, prose
+     2. .columns-author-wrapper     -> author bio
+     3. .default-content-wrapper    -> social share links + "SHARE THIS STORY" h5
+     4. .cards-related-wrapper      -> the related-stories ("Share this Story") list
+
+   Because the wrappers are flat siblings, we turn the SECTION into a CSS grid
+   and place the related list into a right-hand sidebar column while all the
+   article content flows down the left column. Matches wknd.site: article body
+   ~776px (≈66%) on the left, related list ~291px (≈25%) sidebar on the right,
+   top-aligned, whole thing centered within ~1164px.
+
+   Mobile (<900px): the grid rules are gated behind the desktop media query, so
+   everything falls back to the default single-column stack (related list last).
+   Scoped to the section container classes (legit section-layout hooks per
+   AGENTS.md) — no global styles touched.
+   ========================================================================= */
+@media (width >= 900px) {
+  main > .section.cards-related-container.columns-author-container {
+    display: grid;
+    grid-template-columns: minmax(0, 776fr) minmax(0, 291fr);
+    column-gap: 97px;
+    align-items: start;
+    max-width: 1164px;
+    margin: 40px auto;
+    padding: 0 24px;
+    box-sizing: content-box;
+  }
+
+  /* Article content (both default-content wrappers + author bio) -> left column.
+     Neutralise the global `.section > div { max-width; margin: auto; padding }`
+     so each wrapper fills the left track edge-to-edge. IMPORTANT: `margin: 0`
+     (not just left/right) — the global `margin: auto` gives auto TOP/BOTTOM
+     margins too, which in a grid item center it vertically in its row and would
+     override `align-self: start`. The outer gutter/centering lives on the grid. */
+  main > .section.cards-related-container.columns-author-container
+    > .default-content-wrapper,
+  main > .section.cards-related-container.columns-author-container
+    > .columns-author-wrapper {
+    grid-column: 1;
+    max-width: none;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Related-stories list -> right sidebar, top-aligned beside the article. */
+  main > .section.cards-related-container.columns-author-container
+    > .cards-related-wrapper {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: start;
+    max-width: none;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
 /* Related-stories ("Share this Story") list: text-only title + date items,
    stacked vertically. Each item has a thick light-gray rule on its left edge.
    No images. Values extracted from wknd.site .list.cmp-list--upnext. */

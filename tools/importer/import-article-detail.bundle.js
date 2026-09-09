@@ -116,6 +116,13 @@ var CustomImportScript = (() => {
         "noscript",
         "link"
       ]);
+      const h1 = element.querySelector("h1");
+      if (h1) {
+        const titleText = h1.textContent.trim().toLowerCase();
+        element.querySelectorAll("h2, h3, h4").forEach((h) => {
+          if (h.textContent.trim().toLowerCase() === titleText) h.remove();
+        });
+      }
     }
   }
 
@@ -151,6 +158,25 @@ var CustomImportScript = (() => {
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
+  function appendMetadata(main, document, fields) {
+    const entries = Object.entries(fields).filter(([, v]) => v && String(v).trim());
+    if (!entries.length) return;
+    let table = main.querySelector(".metadata");
+    if (!table) {
+      table = document.createElement("div");
+      table.className = "metadata";
+      main.append(table);
+    }
+    entries.forEach(([key, value]) => {
+      const row = document.createElement("div");
+      const k = document.createElement("div");
+      k.textContent = key;
+      const v = document.createElement("div");
+      v.textContent = String(value).trim();
+      row.append(k, v);
+      table.append(row);
+    });
+  }
   var import_article_detail_default = {
     transform: (payload) => {
       const { document, url, params } = payload;
@@ -177,6 +203,7 @@ var CustomImportScript = (() => {
       const hr = document.createElement("hr");
       main.appendChild(hr);
       WebImporter.rules.createMetadata(main, document);
+      appendMetadata(main, document, { Template: PAGE_TEMPLATE.name });
       WebImporter.rules.transformBackgroundImages(main, document);
       WebImporter.rules.adjustImageUrls(main, url, params.originalURL);
       const rawPath = new URL(params.originalURL).pathname.replace(/\/$/, "").replace(/\.html?$/, "");

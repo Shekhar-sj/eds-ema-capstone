@@ -27,6 +27,15 @@ function findBlocksOnPage(document, template) {
   console.log(`Found ${pageBlocks.length} block instances on page`);
   return pageBlocks;
 }
+// Replace a decorated block's contents with a dynamic-listing config table so
+// it populates from the query index at render time. `limit` 0 means "all".
+function makeDynamic(document, blockEl, name, source, limit) {
+  const table = WebImporter.Blocks.createBlock(document, {
+    name,
+    cells: limit > 0 ? [[source], [String(limit)]] : [[source]],
+  });
+  blockEl.replaceWith(table);
+}
 export default {
   transform: (payload) => {
     const { document, url, params } = payload;
@@ -35,6 +44,12 @@ export default {
     const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
     pageBlocks.forEach((block) => {
       if (!block.element.parentNode) return;
+      // The adventures grid is dynamic (lists every adventure from the index,
+      // with index-driven category filter tabs); the hero banner stays authored.
+      if (block.name === 'cards-filter') {
+        makeDynamic(document, block.element, 'cards-filter', 'adventures', 0);
+        return;
+      }
       const parser = parsers[block.name];
       if (parser) { try { parser(block.element, { document, url, params }); } catch (e) { console.error(`Failed to parse ${block.name}:`, e); } }
     });

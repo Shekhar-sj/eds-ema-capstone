@@ -118,6 +118,13 @@ var CustomImportScript = (() => {
         "noscript",
         "link"
       ]);
+      const h1 = element.querySelector("h1");
+      if (h1) {
+        const titleText = h1.textContent.trim().toLowerCase();
+        element.querySelectorAll("h2, h3, h4").forEach((h) => {
+          if (h.textContent.trim().toLowerCase() === titleText) h.remove();
+        });
+      }
     }
   }
 
@@ -156,6 +163,13 @@ var CustomImportScript = (() => {
     console.log(`Found ${pageBlocks.length} block instances on page`);
     return pageBlocks;
   }
+  function makeDynamic(document, blockEl, name, source, limit) {
+    const table = WebImporter.Blocks.createBlock(document, {
+      name,
+      cells: limit > 0 ? [[source], [String(limit)]] : [[source]]
+    });
+    blockEl.replaceWith(table);
+  }
   var import_magazine_listing_default = {
     transform: (payload) => {
       const { document, url, params } = payload;
@@ -164,6 +178,10 @@ var CustomImportScript = (() => {
       const pageBlocks = findBlocksOnPage(document, PAGE_TEMPLATE);
       pageBlocks.forEach((block) => {
         if (!block.element.parentNode) return;
+        if (block.name === "cards-article") {
+          makeDynamic(document, block.element, "cards-article", "articles", 0);
+          return;
+        }
         const parser = parsers[block.name];
         if (parser) {
           try {
