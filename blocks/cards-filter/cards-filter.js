@@ -51,14 +51,15 @@ function cardFromEntry(entry) {
 
   const bodyDiv = document.createElement('div');
   bodyDiv.className = 'cards-filter-card-body';
-  const titleWrap = document.createElement('p');
+  // Match the static card DOM the CSS targets: title = <h3><a>, description = <p>.
+  const h3 = document.createElement('h3');
   const titleLink = document.createElement('a');
   titleLink.href = entry.path;
   titleLink.textContent = entry.title || entry.path;
-  titleWrap.append(titleLink);
-  bodyDiv.append(titleWrap);
+  h3.append(titleLink);
+  bodyDiv.append(h3);
   if (entry.description) {
-    const desc = document.createElement('span');
+    const desc = document.createElement('p');
     desc.className = 'cards-filter-card-description';
     desc.textContent = entry.description;
     bodyDiv.append(desc);

@@ -1,3 +1,12 @@
+/* Spacing above the "Current Adventures" heading — the adventures listing
+   section stacks [page title][hero banner][heading][grid], and the hero banner's
+   overlay panel pulls content up, leaving the heading tight against it. Add
+   breathing room before the heading that immediately follows the hero banner.
+   Scoped to the cards-filter section so other pages are unaffected. */
+main .section.cards-filter-container .hero-banner-wrapper + .default-content-wrapper {
+  margin-top: 48px;
+}
+
 /* ---- Filter tab bar ---- */
 .cards-filter .cards-filter-tablist {
   display: flex;
