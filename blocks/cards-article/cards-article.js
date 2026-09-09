@@ -103,8 +103,17 @@ export default async function decorate(block) {
   // Dynamic block: populate from the query index, filtered by template.
   let entries = (await queryIndex())
     .filter((e) => e.template === config.template && e.title);
-  // Newest first when a lastModified/date field is indexed.
-  entries.sort((a, b) => Number(b.lastModified || 0) - Number(a.lastModified || 0));
+  // Order newest-first. Prefer lastModified when the index provides it (e.g. a
+  // pipeline-generated index at tools.aem.live populates it from publish time).
+  // A manually-authored query-index sheet has no lastModified, so fall back to
+  // index position: rows are appended as pages are added, so the LAST row is the
+  // newest — reverse to surface the most recently added article first.
+  const hasDates = entries.some((e) => Number(e.lastModified) > 0);
+  if (hasDates) {
+    entries.sort((a, b) => Number(b.lastModified || 0) - Number(a.lastModified || 0));
+  } else {
+    entries.reverse();
+  }
   if (config.limit > 0) entries = entries.slice(0, config.limit);
 
   block.textContent = '';
