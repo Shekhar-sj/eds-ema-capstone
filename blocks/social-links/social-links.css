@@ -8,7 +8,10 @@
   gap: 0;
 }
 
-.social-links .social-links-item {
+/* :any-link keeps specificity high enough to beat inherited footer link colors
+   (e.g. `footer .footer a:any-link { color: var(--light-color) }`), so the dark
+   glyph stays visible on the light button — not only on hover. */
+.social-links .social-links-list a.social-links-item:any-link {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -19,15 +22,17 @@
   text-decoration: none;
 }
 
-.social-links .social-links-item:hover,
-.social-links .social-links-item:focus-visible {
+.social-links .social-links-list a.social-links-item:hover,
+.social-links .social-links-list a.social-links-item:focus-visible {
   background-color: #fff;
   color: var(--text-color);
   text-decoration: none;
 }
 
-.social-links .social-links-item svg {
+/* Explicit dark fill (not currentcolor) so the glyph never inherits a light
+   footer text color and vanish against the light button background. */
+.social-links .social-links-list a.social-links-item svg {
   width: 20px;
   height: 20px;
-  fill: currentcolor;
+  fill: var(--text-color);
 }
