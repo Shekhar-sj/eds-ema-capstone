@@ -1,0 +1,47 @@
+# Query-index definition for the WKND EDS site.
+#
+# NOTE ON LOCATION: aem.live no longer reads helix-query.yaml from the repo —
+# the query index is configured in the tools.aem.live UI (Index editor). This
+# file is the authoritative SPEC to paste into that editor: it documents the
+# index name, the pages it covers, and the properties (columns) it produces,
+# including `lastModified`, which the pipeline populates automatically from each
+# page's publish time. That is what lets "edit + publish a page" bubble it to
+# the top of the dynamic listings with no manual dating.
+#
+# Apply at: https://tools.aem.live  → select shekhar-sj/eds-ema-capstone
+#           → Index editor → create an index named `default` with the config below.
+
+version: 1
+
+indices:
+  default:
+    # Build one row per published page under the US/EN tree.
+    include:
+      - '/us/en/**'
+    # Skip the fragments and non-article utility docs from the content index.
+    exclude:
+      - '/us/en/nav'
+      - '/us/en/footer'
+    target: /query-index.json
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, 'content')
+      description:
+        select: head > meta[name="description"]
+        value: attribute(el, 'content')
+      image:
+        select: head > meta[property="og:image"]
+        value: attribute(el, 'content')
+      template:
+        select: head > meta[name="template"]
+        value: attribute(el, 'content')
+      category:
+        select: head > meta[name="category"]
+        value: attribute(el, 'content')
+      # NOTE: do NOT define a `lastModified` property. The indexer adds
+      # `lastModified` automatically as a built-in column (a Unix timestamp from
+      # the page's publish time) — configuring it (and there is no HTTP-header
+      # function available) causes a 400 in the Index Admin editor. The
+      # cards-article / cards-filter blocks sort by that built-in value, so
+      # republishing a page moves it up the listing with no manual upkeep.
